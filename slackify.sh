@@ -26,12 +26,18 @@ function config_file {
   then
     groupadd $filegroup >/dev/null
   fi
-  # Deploy file
-  cp $filesource $filedest
-  # Set file owner
-  chown $fileuser:$filegroup $filedest
-  # Set file permissions
-  chmod $fileperms $filedest
+  # Check if file has changed
+  if ! cmp -s $filesource $filedest
+  then
+    # Deploy file
+    cp ${filesource} ${filedest}
+    # Set file owner
+    chown $fileuser:$filegroup $filedest
+    # Set file permissions
+    chmod $fileperms $filedest
+    # Restart service as file has changed
+    config_service
+  fi
 }
 
 # Function to deal with service
@@ -44,4 +50,3 @@ function config_service {
 
 config_apt
 config_file
-config_service
