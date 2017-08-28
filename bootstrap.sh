@@ -1,2 +1,2 @@
 #!/bin/sh
-apt-get install git
+apt-get install git vim jq
