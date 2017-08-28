@@ -1,6 +1,6 @@
 {
   "file": {
-    "source": "../files/index.php",
+    "source": "files/index.php",
     "dest": "/var/www/html/index.php",
     "user": "http",
     "group": "http",
@@ -11,7 +11,5 @@
     "libapache2-mod-php5",
     "php5-mcrypt"
   ],
-  "service": [
-    "apache2"
-  ]
+  "service": "apache2"
 }
