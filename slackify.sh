@@ -6,7 +6,7 @@ function config_apt {
   # Get packages from config
   apt=`cat $config | jq '.apt'| grep -ve \\\[ -ve \\\] | sed 's/,//g' | sed 's/"//g'`
   # Install packages 
-  apt-get install $apt -y
+  apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y $apt
 }
 
 # Function to deal with files
