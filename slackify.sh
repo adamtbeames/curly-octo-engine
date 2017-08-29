@@ -5,7 +5,7 @@ config=$1
 function config_apt {
   # Get packages from config
   apt=`cat $config | jq '.apt'| grep -ve \\\[ -ve \\\] | sed 's/,//g' | sed 's/"//g'`
-  # Install packages 
+  # Install packages
   apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y $apt
 }
 
@@ -36,7 +36,9 @@ function config_file {
     # Set file permissions
     chmod $fileperms $filedest
     # Restart service as file has changed
-    config_service
+    config_service restart
+  else
+    config_service start
   fi
 }
 
@@ -45,7 +47,7 @@ function config_service {
   # Get service from config
   service=`cat $config | jq '.service' | sed 's/"//g'`
   # Restart service
-  service $service restart
+  service $service $1
 }
 
 config_apt
